@@ -1,0 +1,223 @@
+<html>
+<head>
+<title>CnSide MP PlayList</title>
+<META name="Author" content="CnSide MP, Hoja T">
+<META name="Keywords" content="CnSide MP MPlaylist">
+<META name="Description" content="mp3,asf,wav,mid,网上媒体播放">
+<META http-equiv="Content-Type" content="text/html; charset=gb2312">
+<STYLE TYPE="text/css">
+<!--
+ a:visited,a:active,a:link
+{
+	 color: #cccccc;
+	 text-decoration: none ;
+}
+ a:hover 
+{
+	color: orange;
+	 text-decoration: none ;
+	 cursor:hand;
+}
+ body 
+{
+	 scrollbar-face-color:white;
+	scrollbar-shadow-color:#666666;
+	scrollbar-highlight-color:#666666;
+	 scrollbar-3dlight-color:white;
+	 scrollbar-darkshadow-color:white;
+	 scrollbar-track-color:white;
+	scrollbar-arrow-color:#666666;
+	 font-size:12px;
+	 cursor:crosshair;
+	background: #000000 url(./img/pl_skin4.jpg) no-repeat fixed center top;
+}
+ .text
+{
+	 font-family: "arial", "helvetica", "sans-serif";
+	 font-size: 9pt;
+	 color:#604590;
+	 ;
+}
+       td 
+{
+	 font-family:"arial", "helvetica", "sans-serif";
+	 font-size: 9pt;
+	 color:#90a0b0;
+}
+-->
+</STYLE>
+<script language="JavaScript">
+<!--
+//File:cnsidepl.html
+//Writen by hoja
+//via:the opener document.
+//Tmv Tgasa Tnew replace the images of the list menu title(only for the access version).
+//elmABlock:how many songs in one page.
+//cookie_path:save the list cookie used of cookie_path.
+//cookie_domain:save the list cookie used of cookie_domain.
+//you can also change the day to change the cookies expdate
+
+	var via = opener;
+	var write_via = "opener";
+	var iLoc= self.location.href;
+
+	function playSel(){via.wmpStop();via.startExobud();}
+	function refreshPl(){ self.location=iLoc;}
+	function chkSel(){via.chkAllSel();refreshPl();}
+	function chkDesel(){via.chkAllDesel();refreshPl();}
+
+
+	function dspList(n){
+		var elmABlock= 13;
+		var totElm = via.intMmCnt;
+		var totBlock= Math.floor((via.intMmCnt -1) / elmABlock)+1;
+		var cblock;
+		if(n==null){cblock=1;}
+		else{cblock=n;}
+		var seed;
+		var limit;
+		if(cblock < totBlock){seed= elmABlock * (cblock-1); limit =  cblock*elmABlock -1}
+		else{seed=elmABlock * (cblock-1); limit= totElm-1;}
+
+	if(via.intMmCnt >0 ){
+		var list_num=0;
+		mmList.innerHTML='<p>';
+		pageList.innerHTML=' &nbsp;Page ';
+		for (var i=seed; i <= limit; i++)
+		{				
+			var Tmv='<img src=img/mv.gif alt=ＭＶ width=14 height=14 border=0 align=absbottom>';
+			var TGasa='<img src=img/gasa3.gif alt=有歌词 width=14 height=14 border=0 align=absbottom>';
+			var Tnew='<img src=img/up.gif alt=新歌速递 width=12 height=9 border=0 align=absbottom>';
+
+			var TitleInfo=via.objMmInfo[i].mmTit.replace(Tmv," ").replace(TGasa," ").replace(Tnew," ");
+
+			list_num = i + 1;
+			if(via.objMmInfo[i].selMm=="t"){elm='<input type=checkbox  style="cursor:hand;" onClick='+ write_via + '.chkItemSel('+ i +'); checked>' ;}
+			else{elm = '<input type=checkbox style="cursor:hand;" onClick='+ write_via + '.chkItemSel('+ i +');>' ;}
+			elm = elm + '&nbsp;<font face="Webdings">4</font>' + list_num + '. ' 
+			elm = elm + '<a href=javascript:' + write_via + '.selPlPlay(' + i + ');'
+			elm = elm + ' onclick=\"this.blur();\" title=\"' + TitleInfo + '\">' + via.objMmInfo[i].mmTit + '</a><br>';
+			mmList.innerHTML=mmList.innerHTML+elm;
+
+		}
+		var pmin=cblock-3;
+		var pmax=cblock+3;
+		var ppre=cblock-1;
+		var pnext=cblock+1;
+		if(pmin<=3){pmin=1;pmax=7;}
+		if(pmax>totBlock){pmax=totBlock;}
+		if(ppre<=1){ppre=1;}
+		if(pnext>totBlock){pnext=totBlock;}
+		
+		
+		for(var j=pmin; j<=pmax; j++){
+			page='<a href=javascript:dspList('+j+') title=第'+j+'页>['+j+']</a> ';
+			pageList.innerHTML=pageList.innerHTML+page;
+		}
+		
+		pageInfo.innerHTML='<a href="#"  onClick="setCookies(1);this.blur();" title="全部歌曲">ALL</a> <a href="#"  onClick="setCookies(2);this.blur();" title="中文歌曲">CHA</a> <a href="#"  onClick="setCookies(3);this.blur();" title="英文歌曲">ENG</a> <a href="#"  onClick="setCookies(4);this.blur();" title="韩日歌曲">KOR</a> <a href="#"  onClick="setCookies(5);this.blur();" title="其它歌曲">OTH</a> <a href="#"  onClick="setCookies(6);this.blur();" title="歌曲ＭＶ">MTV</a>'
+		+'<br>'
+		+'<a href=javascript:dspList(1) title=首页>|<<</a>&nbsp;<a href=javascript:dspList('+ppre+') title=上一页>＜</a>&nbsp;第<font color=#3399FF><b>'+cblock+ '</b></font>页&nbsp;共'+ totBlock+'页&nbsp;共'+totElm+'首&nbsp;<a href=javascript:dspList('+pnext+') title=下一页>＞</a>&nbsp;<a href=javascript:dspList('+totBlock+') title=尾页>>>|</a>';
+		list_top.innerHTML = '<img src=img/scope_on.gif border=0>';
+	}
+	else { mmList.innerHTML='<div align=center> CnSideMP 中国意念版权所有</div>'; }
+	 }
+	 
+//Cookie Function
+function setCookies(n){
+	var cookie_path = location.pathname.replace('cnsidepl.html','');
+	var cookie_domain = location.hostname;
+	var days = 7;//设定Cookies过期时间
+	var expdate = new Date();
+	expdate.setTime (expdate.getTime() + (86400 * 1000 * days));
+	
+	switch (n){
+		case 1:
+	var songlist = "";
+	document.cookie = "mylist=" + songlist + ";expires="+ expdate +"; path="+cookie_path+"; domain="+cookie_domain+"";
+	document.cookie = "mytype=" + songlist + ";expires="+ expdate +"; path="+cookie_path+"; domain="+cookie_domain+"";
+	changeList();
+	break;
+	
+		case 2:
+	var songlist = "1";
+
+	document.cookie = "mytype=" + songlist + ";expires="+ expdate +"; path="+cookie_path+"; domain="+cookie_domain+"";
+	changeList();
+	break;
+	
+		case 3:
+	var songlist = "2";
+	document.cookie = "mytype=" + songlist + ";expires="+ expdate +"; path="+cookie_path+"; domain="+cookie_domain+"";
+	changeList();
+	break;
+	
+		case 4:
+	var songlist = "3";
+	document.cookie = "mytype=" + songlist + ";expires="+ expdate +"; path="+cookie_path+"; domain="+cookie_domain+"";
+	changeList();
+	break;
+	
+		case 5:
+	var songlist = "4";
+	document.cookie = "mytype=" + songlist + ";expires="+ expdate +"; path="+cookie_path+"; domain="+cookie_domain+"";
+	changeList();
+	break;
+	
+		case 6:
+	var songlist = "5";
+	document.cookie = "mytype=" + songlist + ";expires="+ expdate +"; path="+cookie_path+"; domain="+cookie_domain+"";
+	changeList();
+	break;
+	}
+}
+
+function changeList(){
+	via.location.reload();
+	setTimeout(self.location.reload,3000);
+}
+
+function returnfalse()
+    {return false; }
+
+    document.oncontextmenu = returnfalse
+    document.ondragstart = returnfalse
+    document.onselectstart = returnfalse
+-->
+</script>
+<script language="JavaScript" type="text/JavaScript">
+<!--
+function MM_reloadPage(init) {  //reloads the window if Nav4 resized
+  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
+    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
+  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
+}
+MM_reloadPage(true);
+//-->
+</script>
+</HEAD>
+
+<BODY onLoad="dspList();this.focus();" onDragStart="return false" onSelectStart="return false" text="silver" topmargin=0 leftmargin=0 marginwidth=0 marginheight=0 style="border: 0px solid black; margin: 0pt;">
+ <table border=0 cellpadding=0 cellspacing=0 width=100% height=475>
+  <tr>
+    <td width="100%" height="25" background="./img/bg.gif" align=center valign=middle><span id="list_top"><img src="img/scope_on.gif" border=0 width="21" height="20"></span><img src="img/bg_logo.gif" border="0" width="170" height="25"></td>
+  </tr>
+  <tr><td width=100% height=*% background="white" valign=top align=left ><div id="mmList"><P></div></td></tr>
+  <tr><td height=40 valign=top bgcolor="#172434">
+  <div id="pageList"></div>
+      <div align="center"><br>
+        <span id="pageInfo"></span> </div></td></tr></table>
+
+ <table border=0 cellpadding=0 cellspacing=0 width=100% height=25>
+  <tr>
+      <td height="25" background="./img/bg.gif" align=center valign=middle></td>
+      <td height=25 width=200 background="./img/bg.gif" align=center valign=middle>
+        <a href="#" onClick="chkSel();" onFocus="this.blur()" title="全选"><img src="./img/allsel.gif" width="45" height="25" border="0"></a>
+        <a href="#" onClick="chkDesel()" onFocus="this.blur()" title="清除"><img src="./img/alldesel.gif" width="45" height="25" border="0"></a>
+        <a href="#" onClick="playSel();" onFocus="this.blur()" title="播放"><img src="./img/play.gif" width="45" height="25" border="0"></a>
+        <a href="#" onClick = "window.close();" onFocus='this.blur()' title="关闭"><img src="./img/close.gif" width="45" height="25" border="0"></a>
+      </td>
+   </tr>
+ </table>
+</body>
+</html>

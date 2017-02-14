@@ -1,0 +1,118 @@
+<html>
+<HEAD>
+<TITLE>CnSide MP Mac Version2</TITLE>
+<META name="Author" content="CnSide MP V1.0.1, Hoja T">
+<META name="Keywords" content="CnSide MP V1.0.1 MPlaylist">
+<META name="Description" content="mp3,asf,wav,mid,网上媒体播放">
+<META http-equiv="Content-Type" content="text/html; charset=gb2312">
+<STYLE TYPE="text/css">
+<!--
+a:link,a:active,a:visited
+{
+	 color: silver;
+	 text-decoration: none ;
+}
+a:hover 
+{
+	 color: white;
+	 text-decoration: none ;
+}
+body 
+{
+	 margin: 0px 0px 0px 0px;
+	 background:white;
+	 cursor:crosshair;
+}
+ .title
+{
+	 font-family: "arial", "helvetica", "sans-serif";
+	 font-size: 9pt;
+	 color:#ec008c;
+	 ;
+}
+.time
+{
+	font-family: "arial", "helvetica", "sans-serif";
+	 font-size: 9pt;
+	 color:darkblue;
+}
+-->
+</STYLE>
+<base target="contents">
+</HEAD>
+<script languange="Javascript" src="js/cnsidebud.js"></script>
+<script languange="Javascript" src="js/time.js"></script>
+<script languange ="Javascript" src="js/imgchg.js"></script>
+<script languange="Javascript">
+var blnAutoStart = true;
+var blnRndPlay = true; 
+var blnStatusBar = false; 
+var blnShowVolCtrl = true;
+var blnShowPlist = true;
+var blnUseSmi = false;
+var blnLooptrk = true;
+var blnShowMmInfo = false;
+</script>
+<script language="JavaScript" src="js/ctrchg.js"></script>
+<script languange ="Jscript" FOR=Exobud EVENT=openStateChange(sf)> evtOSChg(sf); </script>
+<script languange ="Jscript" FOR=Exobud EVENT=playStateChange(ns)> evtPSChg(ns); </script>
+<script languange ="Jscript" FOR=Exobud EVENT=error()> evtWmpError(); </script>
+<script languange ="Jscript" FOR=Exobud EVENT=Buffering(bf)> evtWmpBuff(bf); </script>
+<body onLoad="initExobud();show5();" ondragstart="return false" onselectstart="return false" style="overflow:hidden;" topmargin=0 leftmargin=0 marginwidth=0 marginheight=0>
+<OBJECT ID=Exobud CLASSID="CLSID:6BF52A52-394A-11d3-B153-00C04F79FAA6"
+	type="application/x-oleobject"	width="0" height="0" 
+	style="position:relative;left:0px; top:0px;width:0px;height:0px;">
+  <param name="autoStart" value="true">
+  <param name="balance" value="0">
+  <param name="currentPosition" value="0">
+  <param name="currentMarker" value="0">
+  <param name="enableContextMenu" value="false">
+  <param name="enableErrorDialogs" value="false">
+  <param name="enabled" value="true">
+  <param name="fullScreen" value="false">
+  <param name="invokeURLs" value="false">
+  <param name="mute" value="false">
+  <param name="playCount" value="1">
+  <param name="rate" value="1">
+  <param name="uiMode" value="none">
+  <param name="volume" value="100">
+</OBJECT>
+<table  border=0 cellspacing=0 cellpadding=0 height=25 width=100%>
+  <tr> 
+    <td width=25 height=25 background="img/bg.gif"  align=center valign=middle NOWRAP><img name="scope" src="img/scope_off.gif" width=20 height=21 border=0 onClick="vizExobud();" style="cursor:help;"></td>
+    <td width=11 height=25  background="img/bg1l.gif" NOWRAP>&nbsp;</td>
+    <td valign=middle  width=215 height=25 background="img/bg1c.gif" NOWRAP> <marquee behavior="scroll"  scrolldelay=70 scrollamount=2 width=215 height=12>
+      <span id="disp1" width=215 class="title" align=left>CnSide MP Player</span>  
+      <span id=liveclock width=150 class="title"></span> </marquee> </td>
+    <td width=11 height=25  background="img/bg1r.gif" NOWRAP>&nbsp;</td>
+    <td width=11 height=25  background="img/bg2l.gif" NOWRAP>&nbsp;</td>
+    <td width=105 height=25 align=center valign=middle background="img/bg2c.gif" NOWRAP onClick="chgTimeFmt();this.blur();"> 
+      <span id="disp2" width=105 class="time" align="center" title ="时间显示(Elaps/Laps)" style="cursor:hand;">00:00  
+      | 00:00</span> </td> 
+    <td width=11 height=25  background="img/bg2r.gif" NOWRAP>&nbsp;</td>
+    <td width=5 height=25  background="img/bg.gif" NOWRAP>&nbsp;</td>
+    <td width=15 height=25 valign=bottom background="img/bg.gif" NOWRAP><img name="vmute" src="img/btn_mute_off.gif" border=0 width=15 height=25 onClick="wmpMute();this.blur();" onMouseOver="imgtog('vmute',2);" onMouseOut="imgtog('vmute',3);" style="cursor:hand;" title="静音(Mute)"></td>
+    <td width=15 height=25 valign=bottom background="img/bg.gif" NOWRAP><img name="vdn" src="img/btn_vdn.gif" border=0 width=15 height=25 onClick="wmpVolDn();this.blur();" onMouseOver="imgtog('vdn',2);" onMouseOut="imgtog('vdn',3)" style="cursor:hand;" title="降音"></td>
+    <td width=15 height=25 valign=bottom background="img/bg.gif" NOWRAP><img name="vup" src="img/btn_vup.gif" border=0 width=15 height=25 onClick="wmpVolUp();this.blur();" onMouseOver="imgtog('vup',2);" onMouseOut="imgtog('vup',3)" style="cursor:hand;" title="增音"></td>
+    <td width=5 height=25  background="img/bg.gif" NOWRAP>&nbsp;</td>
+    <td height=25 width=15 valign=bottom background="img/bg.gif" NOWRAP><img name="pmode" src="img/btn_rndmode_off.gif" border=0 width=15 height=25 onClick="chgPMode();this.blur();" onMouseOver="imgtog('pmode',2);" onMouseOut="imgtog('pmode',3)" style="cursor:hand;" title="模式"></td>
+    <td height=25 width=15 valign=bottom background="img/bg.gif" NOWRAP><img name="rept" src="img/btn_rept_off.gif" border=0 width=15 height=25 onClick="chkRept();this.blur();" onMouseOver="imgtog('rept',2);" onMouseOut="imgtog('rept',3)" style="cursor:hand;" title="循环"></td>
+    <td width=5 height=25  background="img/bg.gif" NOWRAP>&nbsp;</td>
+    <td height=25 width=24 valign=bottom background="img/bg.gif" NOWRAP><img name="prevt" src="img/btn_prev.gif" border=0 width=24 height=25 onClick="playPrev();this.blur();" onMouseOver="imgtog('prevt',2);" onMouseOut="imgtog('prevt',3)" style="cursor:hand;" title="上一首"></td>
+    <td height=25 width=24 valign=bottom background="img/bg.gif" NOWRAP><img name="pauzt" src="img/btn_pauz_off.gif" border=0 width=24 height=25 onClick="wmpPP();this.blur();" onMouseOver="imgtog('pauzt',2);" onMouseOut="imgtog('pauzt',3)" style="cursor:hand;" title="暂停/继续"></td>
+    <td height=25 width=24 valign=bottom background="img/bg.gif" NOWRAP><img name="stopt" src="img/btn_stop.gif" border=0 width=24 height=25 onClick="wmpStop();this.blur();" onMouseOver="imgtog('stopt',2);" onMouseOut="imgtog('stopt',3)" style="cursor:hand;" title="停止"></td>
+    <td height=25 width=24 valign=bottom background="img/bg.gif" NOWRAP><img name="playt" src="img/btn_play.gif" border=0 width=24 height=25 onClick="startExobud();this.blur();" onMouseOver="imgtog('playt',2);" onMouseOut="imgtog('playt',3)" style="cursor:hand;" title="播放"></td>
+    <td height=25 width=24 valign=bottom background="img/bg.gif" NOWRAP><img name="nextt" src="img/btn_next.gif" border=0 width=24 height=25 onClick="playNext();this.blur();" onMouseOver="imgtog('nextt',2);" onMouseOut="imgtog('nextt',3)" style="cursor:hand;" title="下一首"></td>
+    <td width=5 height=25  background="img/bg.gif" NOWRAP>&nbsp;</td>
+    <td width="24" height=25 valign=bottom NOWRAP background="img/bg.gif"><img name="plist" src="img/btn_plist.gif" border=0 width=24 height=25 onClick="openPlist();this.blur();" onMouseOver="imgtog('plist',2);" onMouseOut="imgtog('plist',3)" style="cursor:hand;" title="歌曲列表"></td>
+    <td width="15" valign=bottom NOWRAP background="img/bg.gif"><img src="img/btn_min.gif" name="min" width="15" height="25" border="0" onClick="parent.ShowMp(1);this.blur();" onMouseOver="imgChange('min',2);" onMouseOut="imgChange('min',3)" style="cursor:hand;" title="隐藏控制面板"></td>
+    <td width="15" height=25 NOWRAP background="img/bg.gif"><img name="fsc" src="img/btn_fullscreen.gif" width="15" height="25" border="0" onClick="FullScreen();this.blur();" onMouseOver="imgChange('fsc',2);" onMouseOut="imgChange('fsc',3)" style="cursor:hand;" title="全屏显示视频"></td>
+    <td background="img/bg.gif" NOWRAP>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td colspan=26 height=0> <div id="capText" style="width:100%;height:60;font-size:11px;color:white;background-color:#555555;display:none;"> 
+        <P>CnSide MP Player</div></td> 
+  </tr>
+</table>
+</body>
+</HTML>
